@@ -21,6 +21,12 @@ There is no test runner configured yet.
 - App code lives under `src/app`; the `@/*` path alias resolves to `src/*` (see `tsconfig.json`).
 - ESLint uses the flat-config format, extending `eslint-config-next`'s `core-web-vitals` and `typescript` rule sets.
 
+## Docs directory
+
+Before writing or generating any code, ALWAYS check the `/docs` directory first for a relevant doc covering the area you're about to touch (e.g. UI/component conventions, page structure). Read the applicable file(s) there and follow their guidance before starting implementation.
+
+- /docs/ui.md
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know
