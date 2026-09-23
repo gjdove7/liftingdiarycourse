@@ -1,8 +1,26 @@
+import { SignInButton, SignUpButton, Show, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 
 export default function Home() {
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+      <nav className="flex w-full max-w-3xl items-center justify-end gap-4 bg-white px-16 py-6 dark:bg-black">
+        <Show when="signed-out">
+          <SignInButton mode="modal">
+            <button className="text-sm font-medium text-zinc-950 dark:text-zinc-50">
+              Sign in
+            </button>
+          </SignInButton>
+          <SignUpButton mode="modal">
+            <button className="flex h-9 items-center justify-center rounded-full bg-foreground px-4 text-sm font-medium text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc]">
+              Sign up
+            </button>
+          </SignUpButton>
+        </Show>
+        <Show when="signed-in">
+          <UserButton />
+        </Show>
+      </nav>
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
         <Image
           className="dark:invert h-5 w-[100px]"
