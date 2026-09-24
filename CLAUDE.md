@@ -23,9 +23,10 @@ There is no test runner configured yet.
 
 ## Docs directory
 
-Before writing or generating any code, ALWAYS check the `/docs` directory first for a relevant doc covering the area you're about to touch (e.g. UI/component conventions, page structure). Read the applicable file(s) there and follow their guidance before starting implementation.
+Before writing or generating any code, ALWAYS check the `/docs` directory first for a relevant doc covering the area you're about to touch (e.g. UI/component conventions, page structure). Read the applicable file(s) there and follow their guidance before starting implementation:
 
 - /docs/ui.md
+- /docs/data-fetching.md
 
 <!-- BEGIN:nextjs-agent-rules -->
 
