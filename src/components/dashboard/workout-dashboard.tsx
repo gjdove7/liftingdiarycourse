@@ -1,8 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { differenceInMinutes, format, parse } from "date-fns";
-import { Dumbbell } from "lucide-react";
+import { Dumbbell, Plus } from "lucide-react";
 
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -13,6 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import type { WorkoutWithExercises } from "@/data/workouts";
 
 export function WorkoutDashboard({
@@ -49,9 +51,19 @@ export function WorkoutDashboard({
       </div>
 
       <div className="flex flex-col gap-3">
-        <h2 className="text-lg font-semibold">
-          Workouts for {format(selectedDate, "do MMM yyyy")}
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold">
+            Workouts for {format(selectedDate, "do MMM yyyy")}
+          </h2>
+          <Button
+            size="sm"
+            nativeButton={false}
+            render={<Link href="/dashboard/workout/new" />}
+          >
+            <Plus data-icon="inline-start" />
+            New Workout
+          </Button>
+        </div>
 
         {workouts.length === 0 ? (
           <Card>

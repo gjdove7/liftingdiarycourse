@@ -1,6 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 
 import { db } from "@/db";
+import { workouts } from "@/db/schema";
 
 /**
  * Workouts (with their exercises) belonging to the currently authenticated
@@ -35,3 +36,31 @@ export async function getWorkoutsForDate(date: string) {
 export type WorkoutWithExercises = Awaited<
   ReturnType<typeof getWorkoutsForDate>
 >[number];
+
+/**
+ * Creates a new workout owned by the currently authenticated user. Returns
+ * `null` if there is no signed-in user.
+ *
+ * `date` must be a "yyyy-MM-dd" calendar-date string (see the note on
+ * `getWorkoutsForDate` for why this isn't a `Date` instance).
+ */
+export async function createWorkout({
+  name,
+  date,
+}: {
+  name: string | null;
+  date: string;
+}) {
+  const { userId } = await auth();
+
+  if (!userId) {
+    return null;
+  }
+
+  const [workout] = await db
+    .insert(workouts)
+    .values({ userId, name, date })
+    .returning();
+
+  return workout;
+}
