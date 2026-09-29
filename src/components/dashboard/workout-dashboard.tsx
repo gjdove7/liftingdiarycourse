@@ -84,32 +84,38 @@ export function WorkoutDashboard({
                   : null;
 
               return (
-                <Card key={workout.id}>
-                  <CardHeader>
-                    <CardTitle className="font-semibold">
-                      {workout.name ?? "Workout"}
-                    </CardTitle>
-                    {workout.startedAt && (
-                      <CardAction className="text-sm text-muted-foreground">
-                        {format(workout.startedAt, "h:mm a")}
-                      </CardAction>
-                    )}
-                  </CardHeader>
-                  <CardContent className="flex flex-col gap-3">
-                    <div className="flex flex-wrap gap-2">
-                      {workout.workoutExercises.map((workoutExercise) => (
-                        <Badge key={workoutExercise.id} variant="secondary">
-                          {workoutExercise.exercise.name}
-                        </Badge>
-                      ))}
-                    </div>
-                    {durationMinutes !== null && (
-                      <p className="text-sm text-muted-foreground">
-                        Duration: {durationMinutes} min
-                      </p>
-                    )}
-                  </CardContent>
-                </Card>
+                <Link
+                  key={workout.id}
+                  href={`/dashboard/workout/${workout.id}`}
+                  className="block"
+                >
+                  <Card className="transition-colors hover:bg-accent/50">
+                    <CardHeader>
+                      <CardTitle className="font-semibold">
+                        {workout.name ?? "Workout"}
+                      </CardTitle>
+                      {workout.startedAt && (
+                        <CardAction className="text-sm text-muted-foreground">
+                          {format(workout.startedAt, "h:mm a")}
+                        </CardAction>
+                      )}
+                    </CardHeader>
+                    <CardContent className="flex flex-col gap-3">
+                      <div className="flex flex-wrap gap-2">
+                        {workout.workoutExercises.map((workoutExercise) => (
+                          <Badge key={workoutExercise.id} variant="secondary">
+                            {workoutExercise.exercise.name}
+                          </Badge>
+                        ))}
+                      </div>
+                      {durationMinutes !== null && (
+                        <p className="text-sm text-muted-foreground">
+                          Duration: {durationMinutes} min
+                        </p>
+                      )}
+                    </CardContent>
+                  </Card>
+                </Link>
               );
             })}
           </div>
