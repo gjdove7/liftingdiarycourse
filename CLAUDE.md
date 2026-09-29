@@ -27,6 +27,10 @@ Before writing or generating any code, ALWAYS check the `/docs` directory first 
 
 - /docs/ui.md
 - /docs/data-fetching.md
+- /docs/data-mutations.md
+- /docs/auth.md
+- /docs/server-components.md
+- /docs/routing.md
 
 <!-- BEGIN:nextjs-agent-rules -->
 

@@ -1,8 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { differenceInMinutes, format, parse } from "date-fns";
-import { Dumbbell } from "lucide-react";
+import { Dumbbell, Plus } from "lucide-react";
 
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -13,6 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import type { WorkoutWithExercises } from "@/data/workouts";
 
 export function WorkoutDashboard({
@@ -49,9 +51,19 @@ export function WorkoutDashboard({
       </div>
 
       <div className="flex flex-col gap-3">
-        <h2 className="text-lg font-semibold">
-          Workouts for {format(selectedDate, "do MMM yyyy")}
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold">
+            Workouts for {format(selectedDate, "do MMM yyyy")}
+          </h2>
+          <Button
+            size="sm"
+            nativeButton={false}
+            render={<Link href="/dashboard/workout/new" />}
+          >
+            <Plus data-icon="inline-start" />
+            New Workout
+          </Button>
+        </div>
 
         {workouts.length === 0 ? (
           <Card>
@@ -72,32 +84,38 @@ export function WorkoutDashboard({
                   : null;
 
               return (
-                <Card key={workout.id}>
-                  <CardHeader>
-                    <CardTitle className="font-semibold">
-                      {workout.name ?? "Workout"}
-                    </CardTitle>
-                    {workout.startedAt && (
-                      <CardAction className="text-sm text-muted-foreground">
-                        {format(workout.startedAt, "h:mm a")}
-                      </CardAction>
-                    )}
-                  </CardHeader>
-                  <CardContent className="flex flex-col gap-3">
-                    <div className="flex flex-wrap gap-2">
-                      {workout.workoutExercises.map((workoutExercise) => (
-                        <Badge key={workoutExercise.id} variant="secondary">
-                          {workoutExercise.exercise.name}
-                        </Badge>
-                      ))}
-                    </div>
-                    {durationMinutes !== null && (
-                      <p className="text-sm text-muted-foreground">
-                        Duration: {durationMinutes} min
-                      </p>
-                    )}
-                  </CardContent>
-                </Card>
+                <Link
+                  key={workout.id}
+                  href={`/dashboard/workout/${workout.id}`}
+                  className="block"
+                >
+                  <Card className="transition-colors hover:bg-accent/50">
+                    <CardHeader>
+                      <CardTitle className="font-semibold">
+                        {workout.name ?? "Workout"}
+                      </CardTitle>
+                      {workout.startedAt && (
+                        <CardAction className="text-sm text-muted-foreground">
+                          {format(workout.startedAt, "h:mm a")}
+                        </CardAction>
+                      )}
+                    </CardHeader>
+                    <CardContent className="flex flex-col gap-3">
+                      <div className="flex flex-wrap gap-2">
+                        {workout.workoutExercises.map((workoutExercise) => (
+                          <Badge key={workoutExercise.id} variant="secondary">
+                            {workoutExercise.exercise.name}
+                          </Badge>
+                        ))}
+                      </div>
+                      {durationMinutes !== null && (
+                        <p className="text-sm text-muted-foreground">
+                          Duration: {durationMinutes} min
+                        </p>
+                      )}
+                    </CardContent>
+                  </Card>
+                </Link>
               );
             })}
           </div>
