@@ -1,10 +1,9 @@
 import { notFound } from "next/navigation";
 import { Poppins } from "next/font/google";
 import { z } from "zod";
-import { User } from "lucide-react";
+import { UserButton } from "@clerk/nextjs";
 
 import { cn } from "@/lib/utils";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { EditWorkoutForm } from "@/components/dashboard/edit-workout-form";
 import { getWorkoutById } from "@/data/workouts";
 
@@ -32,11 +31,7 @@ export default async function EditWorkoutPage({
     <div className={cn("flex min-h-full flex-col", poppins.className)}>
       <header className="flex items-center justify-between border-b px-6 py-4">
         <span className="text-lg font-semibold">Lifting Diary</span>
-        <Avatar>
-          <AvatarFallback>
-            <User className="size-4" />
-          </AvatarFallback>
-        </Avatar>
+        <UserButton />
       </header>
 
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 p-6">
