@@ -1,9 +1,8 @@
 import { Poppins } from "next/font/google";
 import { isValid, parse } from "date-fns";
-import { User } from "lucide-react";
+import { UserButton } from "@clerk/nextjs";
 
 import { cn } from "@/lib/utils";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { WorkoutDashboard } from "@/components/dashboard/workout-dashboard";
 import { RedirectToToday } from "@/components/dashboard/redirect-to-today";
 import { getWorkoutsForDate } from "@/data/workouts";
@@ -39,11 +38,7 @@ export default async function DashboardPage({
     <div className={cn("flex min-h-full flex-col", poppins.className)}>
       <header className="flex items-center justify-between border-b px-6 py-4">
         <span className="text-lg font-semibold">Lifting Diary</span>
-        <Avatar>
-          <AvatarFallback>
-            <User className="size-4" />
-          </AvatarFallback>
-        </Avatar>
+        <UserButton />
       </header>
 
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 p-6">
