@@ -57,6 +57,7 @@ export async function getWorkoutById(workoutId: string) {
         orderBy: { order: "asc" },
         with: {
           exercise: true,
+          sets: { orderBy: { setNumber: "asc" } },
         },
       },
     },
@@ -64,6 +65,10 @@ export async function getWorkoutById(workoutId: string) {
 
   return workout ?? null;
 }
+
+export type WorkoutDetail = NonNullable<Awaited<ReturnType<typeof getWorkoutById>>>;
+export type WorkoutExerciseDetail = WorkoutDetail["workoutExercises"][number];
+export type SetDetail = WorkoutExerciseDetail["sets"][number];
 
 /**
  * Creates a new workout owned by the currently authenticated user. Returns
@@ -119,6 +124,33 @@ export async function updateWorkout({
   const [workout] = await db
     .update(workouts)
     .set({ name, date, updatedAt: new Date() })
+    .where(and(eq(workouts.id, workoutId), eq(workouts.userId, userId)))
+    .returning();
+
+  return workout ?? null;
+}
+
+/**
+ * Marks a workout owned by the currently authenticated user as completed or
+ * not, by setting/clearing `completedAt`. Returns `null` if there is no
+ * signed-in user or the workout doesn't exist / isn't owned by them.
+ */
+export async function setWorkoutCompleted({
+  workoutId,
+  completed,
+}: {
+  workoutId: string;
+  completed: boolean;
+}) {
+  const { userId } = await auth();
+
+  if (!userId) {
+    return null;
+  }
+
+  const [workout] = await db
+    .update(workouts)
+    .set({ completedAt: completed ? new Date() : null, updatedAt: new Date() })
     .where(and(eq(workouts.id, workoutId), eq(workouts.userId, userId)))
     .returning();
 

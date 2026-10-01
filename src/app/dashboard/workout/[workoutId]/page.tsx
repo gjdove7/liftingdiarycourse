@@ -5,7 +5,10 @@ import { UserButton } from "@clerk/nextjs";
 
 import { cn } from "@/lib/utils";
 import { EditWorkoutForm } from "@/components/dashboard/edit-workout-form";
+import { WorkoutCompletionToggle } from "@/components/dashboard/workout-completion-toggle";
+import { WorkoutExercisesEditor } from "@/components/dashboard/workout-exercises-editor";
 import { getWorkoutById } from "@/data/workouts";
+import { listExercises } from "@/data/exercises";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -27,6 +30,8 @@ export default async function EditWorkoutPage({
     notFound();
   }
 
+  const exerciseCatalog = await listExercises();
+
   return (
     <div className={cn("flex min-h-full flex-col", poppins.className)}>
       <header className="flex items-center justify-between border-b px-6 py-4">
@@ -36,10 +41,20 @@ export default async function EditWorkoutPage({
 
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 p-6">
         <h1 className="text-2xl font-bold">Edit Workout</h1>
+        <WorkoutCompletionToggle
+          workoutId={workout.id}
+          initialCompleted={workout.completedAt !== null}
+          completedAt={workout.completedAt}
+        />
         <EditWorkoutForm
           workoutId={workout.id}
           initialName={workout.name ?? ""}
           initialDate={workout.date}
+        />
+        <WorkoutExercisesEditor
+          workoutId={workout.id}
+          workoutExercises={workout.workoutExercises}
+          exerciseCatalog={exerciseCatalog}
         />
       </div>
     </div>
