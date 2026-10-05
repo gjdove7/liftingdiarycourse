@@ -38,7 +38,13 @@ yarn-error.log*
 
 # claude code
 .claude/settings.local.json
+.agents/
+*skills*
+*skills*/
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local data
+seed_data.sql
